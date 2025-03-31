@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    build: 
+      context: .  # 현재 디렉토리의 Dockerfile 사용
+      dockerfile: Dockerfile  # 사용할 Dockerfile 지정
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"   # AMQP 포트
+      - "15672:15672" # 관리 UI 포트
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: password
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+volumes:
+  rabbitmq_data:
+
+
+# version: '3.8'
+
+# services:
+#   rabbitmq1:
+#     build: 
+#       context: .  # 현재 디렉토리의 Dockerfile 사용
+#       dockerfile: Dockerfile
+#     container_name: rabbitmq1
+#     hostname: rabbitmq1
+#     restart: unless-stopped
+#     environment:
+#       RABBITMQ_ERLANG_COOKIE: "MY_SECRET_COOKIE"  # 노드 간 인증 키 (같아야 함)
+#       RABBITMQ_DEFAULT_USER: admin
+#       RABBITMQ_DEFAULT_PASS: password
+#       RABBITMQ_NODENAME: rabbit@rabbitmq1
+#       RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: "-rabbit cluster_nodes [{rabbit@rabbitmq1},{rabbit@rabbitmq2}]" 
+#     ports:
+#       - "5672:5672"
+#       - "15672:15672"
+#     volumes:
+#       - rabbitmq1_data:/var/lib/rabbitmq
+
+#   rabbitmq2:
+#     build: 
+#       context: .
+#       dockerfile: Dockerfile
+#     container_name: rabbitmq2
+#     hostname: rabbitmq2
+#     restart: unless-stopped
+#     environment:
+#       RABBITMQ_ERLANG_COOKIE: "MY_SECRET_COOKIE" 
+#       RABBITMQ_DEFAULT_USER: admin
+#       RABBITMQ_DEFAULT_PASS: password
+#       RABBITMQ_NODENAME: rabbit@rabbitmq2
+#       RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: "-rabbit cluster_nodes [{rabbit@rabbitmq1},{rabbit@rabbitmq2}]" 
+#     depends_on:
+#       - rabbitmq1
+#     ports:
+#       - "5673:5672"
+#       - "15673:15672"
+#     volumes:
+#       - rabbitmq2_data:/var/lib/rabbitmq
+
+# volumes:
+#   rabbitmq1_data:
+#   rabbitmq2_data:

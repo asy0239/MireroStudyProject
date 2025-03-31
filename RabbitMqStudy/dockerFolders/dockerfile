@@ -1,0 +1,5 @@
+FROM rabbitmq:management
+
+# 클러스터링을 위한 플러그인 활성화
+# RUN rabbitmq-plugins enable --offline rabbitmq_management \
+#     rabbitmq_peer_discovery_classic_config
